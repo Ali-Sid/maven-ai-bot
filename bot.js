@@ -1,8 +1,18 @@
 import dotenv from 'dotenv';
 import { Client, GatewayIntentBits } from 'discord.js';
 import { ask } from './ai.js';
+import express from 'express';
+import cors from 'cors'
 
 dotenv.config();
+const PORT = process.env.PORT || 3000;
+
+const app = express();
+app.use(cors());
+
+app.get('/', (req, res) => {
+  res.send('Discord bot is running!');
+});
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
@@ -13,6 +23,7 @@ const client = new Client({
     GatewayIntentBits.MessageContent
   ],
 });
+
 
 // const genAI = new GoogleGenerativeAI(API_KEY);
 // const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -35,3 +46,7 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(DISCORD_TOKEN);
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
