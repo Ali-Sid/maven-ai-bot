@@ -17,11 +17,13 @@ app.get('/', (req, res) => {
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
 const client = new Client({
+  partials: ["CHANNEL"],
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
-    GatewayIntentBits.DirectMessages
+    GatewayIntentBits.DirectMessages,
+    Discord.Intents.FLAGS.DIRECT_MESSAGES
   ],
 });
 
