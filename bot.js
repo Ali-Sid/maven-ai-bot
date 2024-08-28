@@ -20,7 +20,8 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.DirectMessages
   ],
 });
 
@@ -41,7 +42,12 @@ client.on('messageCreate', async (message) => {
   console.log(result, "result>>>>>")
   const response = await result.parts[0].text;
   console.log(response, "response>>>>>")
-  await message.channel.send(response);
+  // Check if the message is in a DM or a channel
+  if (message.channel.type === 'DM') {
+    await message.author.send(response); // Send response back to the user in DM
+  } else {
+    await message.channel.send(response); // Send response in the channel
+  }
   console.log(response, "channel send!!!")
 });
 
